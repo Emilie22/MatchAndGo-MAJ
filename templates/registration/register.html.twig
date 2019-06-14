@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+<section class="heightPage">
+
+	{# Message d'erreur #}
+	{% if errors is defined %}
+		{% for error in errors %}
+			<div class="alert alert-warning">{{ error.message }}</div>
+		{% endfor %}
+	{% endif %}
+
+	<div class="container-fluid formBackG">
+
+		<div class="row justify-content-center"> 
+			<div class="col-12 col-md-9 col-lg-4 marginForm">
+				<h3 class="formTitle text-center">S'inscrire sur Match&Go</h3>
+
+				{# Formulaire d'inscription #}
+				<div class="form-group mt-3">
+					{{ form_start(registrationForm)}}
+		        	{{ form_row(registrationForm.email, {'attr':{'class':'form-control mb-3 mt-3 formInput'}}) }}
+		       	    {{ form_row(registrationForm.plainPassword.first, {'attr':{'class':'form-control mb-3 mt-3 formInput'}}) }}
+		       	    {{ form_row(registrationForm.plainPassword.second, {'attr':{'class':'form-control mb-3 mt-3 formInput'}}) }}
+
+		       		<div class="form-check-inline">
+						{{ form_widget(registrationForm.TermsAccepted, {'attr':{'class':'form-check-input mr-2 formInput'}}) }}
+						{{ form_label(registrationForm.TermsAccepted, 'Accepter les CGU', {'label_attr':{'class':'form-check-label form-check-input'}}) }}
+					</div>
+				</div>
+				<div class="text-center"><button class="btn text-center formButton" type="submit">S'inscrire</button></div>
+				{{ form_end(registrationForm) }}
+			</div>		
+		</div>
+	</div>   	
+</section>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de profil{% endblock %}
+
+	{% block body %}
+
+		<section class="heightPage">
+			<div class="container-fluid profileBg">
+				{# affichage des messages flash #}
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="messageFlash alert alert-{{ label }}">{{ message }}</div>
+					{% endfor %}
+				{% endfor %}
+		
+			{# Message d'erreur #}
+			{% if errors is defined %}
+					{% for error in errors %}
+						<div class="alert alert-warning">{{ error.message }}</div>
+					{% endfor %}
+			{% endif %}
+
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-9 col-lg-4">
+						<div class="addProfileBg">
+							
+
+							<h3 class="text-center mt-2">Créer mon profil sur Match&Go</h3>
+
+							<div class="form-group mt-3">
+
+								{{ form_start(form) }}
+								{{ form_errors(form) }}
+								<div class="row mt-3">
+									<div class="col-12 col-md-6">
+										{{ form_label(form.firstname) }}
+										{{ form_widget(form.firstname, {'attr':{'class':'col-12 col-md-12 form-control inputProfile'}}) }}
+									</div>
+									<div class="col-12 col-md-6">
+										{{ form_label(form.lastname)}}
+										{{ form_widget(form.lastname, {'attr':{'class':'col-12 col-md-12 form-control  inputProfile'}}) }}
+									</div>
+								</div>
+
+								<div class="row mt-3">
+									<div class="col-12 col-md-6 mb-2">
+										{{ form_label(form.gender)}}
+										{{ form_widget(form.gender, {'attr':{'class':'col-12 col-md-12 form-control inputProfile'}}) }}
+									</div>
+
+									<div class="col-12 col-md-6">
+										{{ form_label(form.birthday)}}
+										{{ form_widget(form.birthday, {'attr':{'class':'col-12 col-md-12 inputProfile'}}) }}
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col-12 col-md-6">
+										{{ form_label(form.city)}}
+										{{ form_widget(form.city, {'attr':{'class':'col-12 col-md-12 form-control inputProfile'}}) }}
+									</div>
+									<div class="col-12 col-md-6">
+										{{ form_row(form.phone, {'attr':{'class':'col-12 col-md-12 form-control mb-2 inputProfile'}}) }}
+									</div>
+								</div>
+								{{ form_row(form.picture, {'attr':{'class':'col-12 col-md-12 inputProfile mb-3 mr-5 mt-3'}}) }}
+								{{ form_row(form.description, {'attr':{'class':'mb-3 form-control inputProfile'}})  }}
+								{{ form_row(form.countries, {'attr':{'class':'form-control mb-3 inputProfile'}}) }}
+								{{ form_row(form.facebook, {'attr':{'class':'form-control mb-3 inputProfile'}}) }}
+								{{ form_row(form.instagram, {'attr':{'class':'form-control inputProfile'}}) }}
+								{{ form_row(form.save, {'attr':{'class':'form-control mt-3 btn btnCreateProfile'}}) }} 
+
+								{{ form_end(form) }}
+
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</section>
+
+	{% endblock %}

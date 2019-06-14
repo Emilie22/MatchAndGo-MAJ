@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>{% block title %}Match&Go{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Open+Sans|Questrial|PT+Serif:700" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+    {% block stylesheets %}{% endblock %}
+
+    <body>      
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white" id="navbarAll">
+                {# Bloc Logo / lien page home #}
+                <a class="navbar-brand" href="{{ path ('home') }}"><img src="{{ asset ('logo.png')}}"></a>
+                {# Fin du bloc Logo #}
+
+                {# bouton burger #}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {# fin bouton burger #}
+
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav">
+
+                        {# Bloc visiteur #}
+                        <li class="nav-item mr-3">
+                            <a class="nav-link" href="{{ path ('concept') }}">Concept</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="nav-link" href="{{ path ('blog')}}">Blog</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="nav-link" href="{{ path ('contact')}}">Contact</a>
+                        </li>
+                        {# Fin du bloc visiteur #}
+
+                        {# Bloc Admin #}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Admin<span class="caret"></span><span class="cache">A</span></a>
+                            {# Menu déroulant Admin #}
+                            <div class="dropdown-menu" aria-labelledby="navbarAdmin">
+                                <a class="dropdown-item" href="{{ path ('users') }}">Users</a>
+                                <a class="dropdown-item" href="{{ path ('addConceptAdmin') }}">Concept</a>
+                                <a class="dropdown-item" href="{{ path ('addBlogAdmin')}}">Blog</a>
+                            </div>
+                            {# Fin menu déroulant admin #}
+                        </li>
+                        {% endif %}
+                        {# Fin du bloc Admin #}
+
+                        {# Bloc Connexion #}
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        {% endif %}
+                        {# fin bloc connexion #}
+
+                        {# Bloc User connecté #}
+                        {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarProfil" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil<span class="caret"></span><span class="cache">A</span></a>
+                            {# Menu déroulant Profil #}
+                            <div class="dropdown-menu" aria-labelledby="navbarProfil">
+                                <a class="dropdown-item" href="{{ path('userInfo') }}">Voir mon profil</a>
+                                <a class="dropdown-item" href="{{ path('updateProfile') }}">Modifier mon profil</a>
+                                <a class="dropdown-item" href="{{ path('quiz') }}">Recherche match</a>
+                                <a class="dropdown-item" href="{{ path('match') }}">Derniers matchs</a>
+                                <a class="dropdown-item" href="{{ path('chat') }}">T'chat</a>
+                                <a class="dropdown-item" href="{{ path('logout') }}">Déconnexion</a>
+                            </div>
+                            {# Fin du Menu déroulant Profil #}
+                        </li>
+                        {% endif %}
+                        {# Fin du bloc User connecté #}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    
+  {% block body %}{% endblock %}
+
+        <footer>                              
+            <div class="container-fluid">
+                <div class="row text-center">
+                    <div class="col-12 col-md-4">
+                        <p>Mentions légales</p>
+                        <a class="lienHome" href="{{path('cgu')}}"><p>Conditions Générales d'Utilisation</p></a>
+                        <p>Utilisation des cookies</p>
+                        <p>Confidentialité</p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <p>Match&Go</p>
+                        <p>66 rue Abbé de l'Epée</p>
+                        <p>33000 Bordeaux</p>
+                        <p><a class="lienHome" href="https://goo.gl/maps/vQFAw9F82Pm">Nous localiser</a></p>
+                    </div>
+                    <div class="col-12 col-md-4"> {# Lien réseaux sociaux #}
+                        <p>Suivez-nous sur les réseaux sociaux</p>
+                        <a class="lienHome" href="https://fr-fr.facebook.com"><i class="fab fa-facebook-square fa-3x mr-2"></i></a>
+                        <a class="lienHome" href="https://www.instagram.com/"><i class="fab fa-instagram fa-3x mr-2"></i></a>
+                        <a class="lienHome" href="https://twitter.com/"><i class="fab fa-twitter fa-3x mr-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

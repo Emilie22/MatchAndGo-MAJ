@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Match{% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+
+{% endblock %}
+
+{% block body %}
+
+<section class="heightPage">
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="text-center">
+				<div class="row">
+					<div class="col-md-3 text-right">
+						<img class="avatar2 mr-3" src="{{ asset('uploads/user/image/' ~ moi.picture) }}" alt="">
+					</div>
+					<div class="col-md-7">
+						<h3 class="formTitle titleMatch"> Bonjour {{ moi.firstname }} ! Voici les voyageurs qui te correspondent !<br>N'hésite pas à discuter avec eux ! </h3>
+					</div>
+					<div class="col-md-2">
+						<a class="btn mt-5 mr-2 btnSearch" href="{{ path ('quiz')}}">Nouvelle recherche de match</a>
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12 col-md-8">
+			<div class="row">
+				{# je boucle pour pouvoir afficher les infos de mes match #}
+				{% for userA in userMatch %}
+					{% for userB in userA %}
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="box15" id="boxhover{{userB.id}}">
+                                <img  src="{{ asset('uploads/user/image/' ~ userB.picture) }}" alt="photoUserMatch" class="thumbnails">
+                                <div class="box-content">
+                                    {# conversion de la date d'anniversaire en âge #}
+                                    {# avec condition pour changement d'âge le jour exact #}
+                                    <p class="title">{{ userB.firstname }}<span><br> {{ "now"|date('z') + 1 >= userB.birthday|date('z') ? "now"|date('Y') - userB.birthday|date('Y') : "now"|date('Y') - userB.birthday|date('Y') - 1 }} ans<br> {{ userB.city }}</span></p>
+                                    <ul class="icon">
+                                        <li><a href="{{path('showProfileWithSlug', {slug:userB.slug}) }}"><i class="fas fa-user"></i></a></li>
+                                        <li><a href="{{path('addChat', {idUser:userB.id}) }}"><i class="fas fa-comment"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+					{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="col-12 col-md-4 mt-2">
+			{# div pour afficher la map pour la localisation des match #}
+{#             <div class="row">
+                <div class="col-12">
+                    <div id="mapLoc"></div>
+                </div>
+            </div> #}
+            <div class="row">
+                <div class="col-12 mapMatch">
+                    <div id="mapid"></div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+</section>
+{% endblock %}
+
+
+{% block javascripts %}
+{{parent()}}
+
+// <script>
+
+//     function initializeMap() {
+
+
+//         var map = new google.maps.Map(document.getElementById('mapLoc'), {
+//             zoom: 3.5,
+//             center: {lat: 45.785, lng: 3.115}
+//         });
+        
+//         var geocoder = new google.maps.Geocoder();
+
+//         let coords = {
+//         	{% for key, coord in userCoord %}
+//         		'{{ key }}' : { 'firstname': '{{ coord.firstname}}', 'lat': {{ coord.lat }}, 'lng':{{ coord.lng }}},
+//         	{% endfor %}
+//         };
+
+//         $.each(coords, function(i, coord) {
+
+//         	var marker = new google.maps.Marker({
+//             position: {lat: coord.lat, lng: coord.lng},
+//             map: map
+//         	});
+
+//         	var infowindow = new google.maps.InfoWindow({
+// 	          content: coord.firstname
+// 	        });
+//           	marker.addListener('mouseover', function() {
+//           		infowindow.open(map, marker);
+//           	});
+//           	marker.addListener('mouseout', function() {
+//           		infowindow.close(map, marker);
+//           	});
+//         });
+
+//     };
+
+// </script>
+
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+
+
+<script>
+
+
+
+    let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    let osm = L.tileLayer(osmUrl, {attribution: osmAttrib}); 
+
+    let mapid = L.map('mapid').setView([45.785, 3.115], 2.5).addLayer(osm);
+
+    var orangeIcon = new L.Icon({
+      iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    var coords = {
+        {% for key, coord in userCoord %}
+            '{{ key }}' : { 'firstname': '{{ coord.firstname}}', 'id': '{{ coord.id }}', 'lat': {{ coord.lat }}, 'lng': {{ coord.lng }}},
+        {% endfor %}
+    };
+
+    $.each(coords, function(i, coord) {
+        var marker = L.marker([coord.lat, coord.lng], {icon: orangeIcon}).addTo(mapid);
+        var box = document.querySelectorAll('div.box15:not(#boxhover'+coord.id+')');
+        marker.on('mouseover', function (e) {
+            marker.bindPopup(coord.firstname);
+            this.openPopup();
+            $.each(box, function(i, boxFocus) {
+                boxFocus.style.opacity = '0.25';
+            })
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+            $.each(box, function(i, boxFocus) {
+                boxFocus.style.opacity = '';
+            })
+        });
+        var boxHover = document.querySelectorAll('.box15#boxhover'+coord.id);
+        $.each(boxHover, function(i, boxH) {
+            boxH.addEventListener('mouseover', function() {
+                marker.bindPopup(coord.firstname);
+                marker.openPopup();
+            });
+            boxH.addEventListener('mouseout', function() {
+                marker.closePopup();
+            })
+        });
+   
+    });
+
+window.addEventListener('scroll', function(e) {
+    var map = document.getElementById('mapid');
+    if (map.style.top < '0') {
+        map.style.position = 'fixed';
+    }
+});
+
+</script>
+
+{#
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0xJoi5c9MwYIYQlwIEfLqLh95hLtcaYA&callback=initializeMap">
+</script>
+#}
+
+{% endblock %}
+

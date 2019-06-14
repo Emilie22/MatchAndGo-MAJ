@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+          {#   Page de connexion #}
+
+{% block body %}
+
+<section class="heightPage">
+    <div class="container-fluid formBackG">
+        <form class="form-group mb-0" method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+                <div class="row justify-content-center"> 
+
+                    <div class="col-12 col-md-9 col-lg-4 marginForm">
+                        <h3 class="formTitle text-center">Se connecter</h3>
+                        <label class="mb-3 mt-3" for="inputEmail">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control formInput" placeholder="Email" required autofocus>
+                        <label class="mb-3 mt-3" for="inputPassword">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control formInput" placeholder="Password" required>
+
+                        <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input class="mr-3 mt-3" type="checkbox" name="_remember_me">Se souvenir de moi
+                        </label>
+                    </div>
+                    <div>
+                        <a href="{{ path('resetPassword') }}" class="mdpoublie">Mot de passe oublié</a>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn text-center formButton" type="submit">Connexion</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

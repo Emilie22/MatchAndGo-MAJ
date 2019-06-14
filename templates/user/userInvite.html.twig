@@ -1,0 +1,50 @@
+	{% extends 'base.html.twig' %}
+
+	{% block title %}Voir profil{% endblock %}
+
+	{% block body %}
+
+
+	<section class="heightPage">
+		<div class="container-fluid pr-0 pl-0 rowBgProfile">
+				<img src="{{ asset('uploads/profile/' ~random(imgBgProfile)~'.jpg') }}" class="imgBgProfile img-fluid" alt="landscape">			
+			{# affichage des messages flash #}
+					{% for label, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="messageFlash alert alert-{{ label }}">{{ message }}</div>
+						{% endfor %}
+					{% endfor %}
+				
+			{# AFFICHAGE DU PROFIL D'UN UTILISATEUR NON CONNECTE #}
+				<div class="infosProfile">
+					<div class="row justify-content-center mt-5">
+						<div class="col-12 col-md-4">
+							{% if user.picture %}
+								<img src="{{ asset('uploads/user/image/' ~ user.picture) }}" class="avatar" alt="avatar">
+							{% elseif user.gender == 'Homme' %}
+								<img src="{{ asset('uploads/user/image/avatarHomme.png')}}" class="avatar">
+							{% elseif user.gender == 'Femme' %}
+								<img src="{{ asset('uploads/user/image/avatarFemme.png')}}" class="avatar">
+							{% endif %}
+						</div>
+						<div class="mt-5 col-12 col-md-7">
+							<h3>Profil de {{ user.firstname}}</h3>
+							<a class="mt-5 mr-2 iconComment" href="{{path('addChat', {idUser:user.id}) }}"><i class="iconComment fas fa-comment"></i>Discuter avec {{user.firstname}}</a>
+						</div>
+					</div>
+					<div class="row justify-content-center mt-5">
+						<div class="col-12 col-md-4">
+							<p><b>Ville :</b> {{ user.city}}</p>	
+							<p><b>Date de naissance :</b> {{ user.birthday|date('d-m-Y') }}</p>			
+							<p><b> Facebook :</b><a href="{{ user.facebook }}"><i class="ml-2 mr-2 iconFbk fab fa-facebook fa-2x"></i></a></p>
+							<p><b>Instagram : </b>{{ user.instagram }}<i class="ml-2 iconInsta fab fa-instagram fa-2x"></i></p>
+						</div>
+						<div class="col-12 col-md-7 description">
+							<p><b>Description : </b>{{ user.description}}</p>
+							<p><b>Derniers pays visités :</b> {{ user.countries}}</p>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</section>
+	{% endblock %}

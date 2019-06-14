@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+
+	<section class="heightPage">
+
+		{# affichage des messages flash #}
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="messageFlash mb-0 alert alert-{{ label }}">{{ message }}</div>
+					{% endfor %}
+				{% endfor %}
+		<div class="container-fluid pr-0 pl-0 rowBgProfile">
+				<img src="{{ asset('uploads/profile/' ~random(imgBgProfile)~'.jpg') }}" class="imgBgProfile" alt="landscape">
+			
+			{# Affichage des informations de profil de l'utilisateur connnecté #}
+
+			<div class="infosProfile">
+				<div class="row justify-content-center mt-5">
+					<div class="col-12 col-md-4">
+						{% if user.picture %}
+							<img src="{{ asset('uploads/user/image/' ~ user.picture) }}" class="avatar" alt="avatar">
+						{% elseif user.gender == 'Homme' %}
+							<img src="{{ asset('uploads/user/image/avatarHomme.png') }}" class="avatar" alt="avatar">
+						{% elseif user.gender == 'Femme' %}
+							<img src="{{ asset('uploads/user/image/avatarFemme.png') }}" class="avatar" alt="avatar">
+						{% endif %}
+					</div>
+					<div class="mt-5 col-12 col-md-7">
+						<h3>Bonjour {{ user.firstname}} {{ user.lastname }}, voici vos informations de profil :</h3>
+						{% if is_granted('ROLE_USER') %}
+							<a class="iconComment" href="{{ path('updateProfile')}}"><i class="iconComment fas fa-pencil-alt"></i>Modifier mon profil</a><br>
+							<a  class="iconComment" href="{{ path('quiz')}}"><i class="iconComment fas fa-search"></i>Nouvelle recherche de match</a>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="row justify-content-center mt-5">
+					<div class="col-12 col-md-4">
+						<p><b>Ville :</b> {{ user.city}}</p>
+						<p><b>Numéro de téléphone :</b> {{ user.phone }}</p>
+						<p><b>Email : </b>{{ user.email}}</p>			
+						<p><b>Date de naissance :</b> {{ user.birthday|date('d-m-Y') }}</p>			
+						<p><b>Facebook :</b><a href="{{ user.facebook }}"><i class="ml-2 mr-2 iconFbk fab fa-facebook fa-2x"></i></a></p>
+						<p><b>Instagram : </b>{{ user.instagram }}<i class="ml-2 iconInsta fab fa-instagram fa-2x"></i></p>
+					</div>
+
+					<div class="col-12 col-md-7 description">
+						<p><b>Description : </b>{{ user.description}}</p>
+						<p><b>Derniers pays visités :</b> {{ user.countries}}</p>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</section>
+{% endblock %}

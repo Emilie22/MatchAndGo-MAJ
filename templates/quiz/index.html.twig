@@ -1,0 +1,244 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questionnaire de match{% endblock %}
+
+{% block body %}
+
+<section class="heightPage">
+
+<div class="container-fluid">
+
+<h3 class="formTitle text-center mb-2">Répondez à ce questionnaire et trouvez vos prochains compagnons de voyage !</h3>
+<p class="text-center mb-0 titleQuiz">(plusieurs réponses possibles par question)</p>	
+
+<div class="container">
+
+	{# début du formulaire #}
+	<form method="post" class="form-horizontal">
+
+	{# début du carousel #}
+	<div id="carouselQuiz" class="carousel slide mb-5" data-ride="carousel" data-interval="false">
+
+		{# indicateurs du carousel #}
+		<ol class="carousel-indicators">
+	        {% for question in questions %}
+	            <li data-target="#carouselQuiz" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+	        {% endfor %}
+	    </ol>
+
+		<div class="w-100 carousel-inner slideMap" role="listbox">
+
+			{# 1ère slide avec la map des continents #}
+			<div class="carousel-item active">
+				<div class="row">
+		            <div class="form-group col-12 text-center labelQuestion">
+						<label>{{ questions[0].label }}</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{# div où j'affiche la map #}
+						<div id="mapquiz">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{# div qui me permet de rajouter les input hidden une fois les continents choisis #}
+			<div id="map_answer"></div>
+
+			{# boucle pour afficher toutes les questions et les réponses associées #}
+			{% for question in questions %}
+
+				{# je boucle à partir de la 2ème question (la 1ère étant dans la slide map) #}
+				{% if loop.index0 > 0 %}
+
+				<div class="carousel-item">
+			        <img src="{{asset('uploads/quiz/picture/'~random(imgQuiz)~'.jpg') }}" class="d-block w-100 pictureQuiz">
+					<div class="row">
+			            <div class="form-group col-12 text-center labelQuestion">
+							<label>{{ question.label }}</label>
+						</div>
+					</div>
+					
+						<div class="row littleContainer">
+						
+						{# pour chaque question je boucle pour afficher les réponses associées #}
+						{% for answer in question.answers %}	
+
+							<div class="col-12 col-md-6 btn-group-toggle text-center mb-3" data-toggle="buttons">
+								<label class="btn btn-warning btnAnswers">
+									<input type="checkbox" name="{{ answer.labelAnswer }}" value="{{ answer.id }}" autocomplete="off">
+									{{ answer.labelAnswer }}
+								</label>
+							</div>
+						{% endfor %}
+						
+					</div>
+
+				</div>
+
+				{% endif %}
+
+			{% endfor %}
+
+			{# dernière slide avec la bouton de soumission du formulaire #}
+			<div class="carousel-item row">
+				<img src="{{asset('uploads/quiz/picture/carouselsearch.jpg') }}" class="d-block ml-2 pictureQuiz">
+				<div class="form-group col-12 text-center">
+					<button type="submit" id="btnSearchMatch">Recherche tes ami(e)s de voyage !</button>
+				</div>
+			</div>
+		
+		</div>
+
+	</form>
+
+	{# defilement prev et next du carousel #}
+	<div class="navi">
+	    <a class="carousel-control-prev ico" href="#carouselQuiz" role="button" data-slide="prev">
+	      <i class="fa fa-chevron-left fa-3x chevrons" aria-hidden="true"></i>
+	    </a>
+	    <a class="carousel-control-next ico" href="#carouselQuiz" role="button" data-slide="next">
+	      <i class="fa fa-chevron-right fa-3x chevrons" aria-hidden="true"></i>
+	    </a>
+	</div>
+
+</div>
+
+</div>
+</section>
+{% endblock %}
+
+
+{% block javascripts %}
+
+{{ parent() }}
+
+{# JS pour la map de la 1ère slide du carousel/quiz #}
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/maps.js"></script>
+<script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+<script src="https://www.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<script>
+
+$(function() {
+
+	am4core.useTheme(am4themes_animated);
+
+	// création de la map
+	var chart = am4core.create("mapquiz", am4maps.MapChart);
+	chart.projection = new am4maps.projections.Mercator();
+
+	var restoreContinents = function(){
+	  chart.goHome();
+	};
+
+	// chart.zoomControl = new am4maps.ZoomControl();
+
+	// var homeButton = new am4core.Button();
+	// homeButton.events.on("hit", restoreContinents);
+
+	// homeButton.icon = new am4core.Sprite();
+	// homeButton.padding(7, 5, 7, 5);
+	// homeButton.width = 20;
+	// homeButton.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+	// homeButton.marginBottom = 10;
+	// homeButton.parent = chart.zoomControl;
+	// homeButton.insertBefore(chart.zoomControl.plusButton);
+
+	var hoverColorHex = "#9a7bca";
+	var hoverColor = am4core.color(hoverColorHex);
+
+	// Continents 
+	var continentsSeries = chart.series.push(new am4maps.MapPolygonSeries());
+	continentsSeries.geodata = am4geodata_continentsLow;
+	continentsSeries.useGeodata = true;
+	continentsSeries.exclude = ["antarctica"];
+
+	var continentTemplate = continentsSeries.mapPolygons.template;
+	continentTemplate.tooltipText = "{name}";
+	continentTemplate.properties.fillOpacity = 0.8; // Reduce conflict with back to continents map label
+	continentTemplate.propertyFields.fill = "color";
+	continentTemplate.areasSettings = { 
+	  selectable: true,
+	};
+
+	var continentHover = continentTemplate.states.create("hover");
+	continentHover.properties.fill = hoverColor;
+	continentHover.properties.stroke = hoverColor;
+
+	continentsSeries.dataFields.zoomLevel = "zoomLevel";
+	continentsSeries.dataFields.zoomGeoPoint = "zoomGeoPoint";
+
+	continentsSeries.data = [ {
+	  "id": "africa",
+	  "value": 4,
+	  "name": "Afrique",
+	  "color": chart.colors.getIndex(0)
+	}, {
+	  "id": "asia",
+	  "name": "Asie",
+	  "value": 5,
+	  "color": chart.colors.getIndex(1),
+	}, {
+	  "id": "oceania",
+	  "name": "Océanie",
+	  "value": 6,
+	  "color": chart.colors.getIndex(2)
+	}, {
+	  "id": "europe",
+	  "name": "Europe",
+	  "value": 3,
+	  "color": chart.colors.getIndex(3)
+	}, {
+	  "id": "northAmerica",
+	  "name": "Amérique du nord",
+	  "value": 1,
+	  "color": chart.colors.getIndex(4)
+	}, {
+	  "id": "southAmerica",
+	  "name": "Amérique du sud",
+	  "value": 2,
+	  "color": chart.colors.getIndex(5)
+	}];
+
+	// je crée un tableau vide pour stocker les value des continents sur lesquels je clique
+	let continents = [];
+	// lorsque je clique sur un continent :
+	continentTemplate.events.on("hit", function(event) {
+		// je récupère la value qui correspond à l'id du continent
+		let val = event.target.dataItem.dataContext.value;
+		// si l'id est déjà présent dans le tableau, je le supprime (système checkbox)
+		// et je supprime l'input hidden coorespondant
+		// je remets le continent à sa couleur d'origine
+		if($.inArray(val, continents) !== -1){
+		  	for (var i=0; i<continents.length; i++) {
+		  	 	if (continents[i] === val) {
+		  	 		continents.splice(continents.indexOf(val), 1);
+		  			var continent = document.getElementById("continent_"+val);
+		  			continent.remove();
+		  			event.target.dataItem.dataContext.color._value = color;
+		  	 	}
+		  	}
+		}
+		// si l'id n'est pas présent dans le tableau, je le rajoute
+		// et je rajoute l'input hidden dans la div#map_answer pour que la value soit récupérée
+		// dans le traitement du formulaire
+		// je change également la couleur du continent sélectionné
+	  	else{
+		  	var color = event.target.dataItem.dataContext.color._value;
+		  	continents.push(val);
+		  	event.target.dataItem.dataContext.color._value = {r:253,g:173,b:23};
+		  	$("#map_answer").append('<input type="hidden" name="'+event.target.dataItem.dataContext.name+'" value="'+val+'" id="continent_'+val+'">');
+		  }
+
+	});
+
+})
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Concept{% endblock %}
+
+{% block body %}
+								{# Affichage de la page Concept #}
+	<section class="heightPage">
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div class="container-fluid conceptBg pl-0 pr-0">
+			<div class="container">
+				<div class="row">
+					{% for concept in concepts %}
+
+						<div class="col-12 col-md-6 mt-5">
+							<img src="{{ asset('uploads/concept/image/' ~ concept.pictureConcept) }}" class="img-thumbnail">
+						</div>
+						<div class="col-12 col-md-6 text-center">
+							<h3 class="text-center formTitle">{{ concept.titleConcept }}</h3>
+							<p class="mt-5">{{ concept.contentConcept }}</p>
+							
+							{% if is_granted('ROLE_ADMIN') %} 
+								<a href="{{ path('deleteConcept', {id: concept.id}) }}"><i class="fas fa-trash"></i></a>
+								<a href="{{ path('updateConcept', {id: concept.id}) }}"><i class="fas fa-pencil-alt"></i></a> 
+							{% endif %}
+						</div>
+
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="container-fluid pl-0 pr-0">
+				<div class="row conceptRow justify-content-center pl-0 pr-0">
+					<div class="col-12 col-md-12">
+						<h2 class="mt-5 mb-5 text-center"><em>«Voyager sans rencontrer l’autre, ce n’est pas voyager, c’est se déplacer»</em>, Alexandra David Neel</h2>
+					</div>
+				</div>
+			</div>
+
+			<div class="container mt-5 mb-5">
+				<div class="row formTitle justify-content-center">
+					<h3>L'équipe de Match&Go</h3>
+				</div>
+				<div class="row mt-5">
+					<div class="col-12 col-md-6 col-lg-3 text-center teamPhoto">
+						<img src="{{ asset('uploads/concept/image/emilie.jpeg')}}">
+						<h2>Émilie</h2>
+						<p>Team member</p>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3 text-center teamPhoto">
+						<img src="{{ asset('uploads/concept/image/david.JPG')}}">
+						<h2>David</h2>
+						<p>Team member</p>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3 text-center teamPhoto">
+						<img src="{{ asset('uploads/concept/image/thomas.JPG')}}">
+						<h2>Thomas</h2>
+						<p>Team member</p>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3 text-center teamPhoto">
+						<img src="{{ asset('uploads/concept/image/soraya.JPG')}}">
+						<h2>Soraya</h2>
+						<p>Team member</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+

@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes tchats{% endblock %}
+
+{% block body %}
+<section class="heightPage">
+    <div class="row">
+        <div class="container">
+        	{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="messageFlash alert alert-{{ label }} m-0">{{ message }}</div>
+				{% endfor %}
+			{% endfor %}
+            <div class="col-md-12 my-5 text-center">
+                <select id="salon" class="form-control">
+                    {% for chat in chats %}
+                        <option class="selectSalon" value="{{chat.salon.id}}" data-user="{{chat.user.id}}">{{chat.salon.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid">
+            <div class="offset-2 col-md-8 border border-dark rounded" id="listMessage">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container text-center mt-3">
+            <form id="stop" class="form-inline">
+                <div class="col-md-10">
+                    <input type="text" class="form-control formInput" id="message">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn formButton m-0">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{# Personne qui match avec l'utilisateur connecté #}
+    <div class="row justify-content-center">
+        <h3 class="formTitle">Invitez d'autres personnes dans le tchat </h3>
+    </div>
+	<div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+			<div class="row">
+			{% for userA in userMatch %}
+				{% for userB in userA %}
+                    <div class="col-10 col-md-4 col-lg-2">
+                        <div class="box15">
+                            <img  src="{{ asset('uploads/user/image/' ~ userB.picture) }}" alt="photoUserMatch" class="thumbnails">
+                            <div class="box-content">
+                                <p class="title">{{ userB.firstname }}<span><br> {{ userB.birthday|date('m-d-Y') }} <br> {{ userB.city }}</span></p>
+                                <ul class="icon">
+                                    <li><a href="{{path('showProfileWithSlug', {slug:userB.slug}) }}"><i class="fas fa-user"></i></a></li>
+                                    <li><a class="inviteUser" data-iduser="{{userB.id}}"><i class="fas fa-comment"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+				{% endfor %}
+			{% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+
+	<script>
+        $(function(){
+        // Ajax pour le changement de salon avec le select 
+            $("#salon").on('change', function(){
+
+                let idSalon = $(this).val();
+                let idUser = $('.selectSalon').data('user');
+
+                $.ajax({
+
+                    type: 'post',
+                    url: '{{ path("changeSalon") }}',
+                    data: 'idSalon=' + idSalon + '&idUser=' + idUser,
+                    datatype: 'html',
+                    success: function(result){
+                        $("#listMessage").empty().append(result);
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+
+                }) 
+            })
+        // Ajax pour l'envoie de message 
+            $("#stop").on('submit', function(e){
+                e.preventDefault();
+                let setSalon = $('#salon').val();
+                let setUser = $('.selectSalon').data('user');
+
+                let message = $('#message').val();
+                let idSalon = setSalon;
+                let idUser = setUser;
+                $.ajax({
+
+                    type: 'post',
+                    url: '{{ path("addMessage") }}',
+                    data: 'message='+ message + '&idSalon=' + idSalon + '&idUser=' + idUser,
+                    datatype: 'html',
+                    success: function(){
+                        $("#message").val('');
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                })
+            })
+        // Ajax pour le rafraichissement de la div message
+            function refresh(){
+                let idSalon = $('#salon').val();
+                let idUser = $('.selectSalon').data('user');
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("changeSalon") }}',
+                    data: 'idSalon=' + idSalon + '&idUser=' + idUser, 
+                    timeout: 3000, 
+                    dataType: 'html', 
+                    success: function(result){
+                        $("#listMessage").html(result);
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                })
+            }
+            setInterval(refresh, 3000);
+        // Invitez des personnes dans le salon utilisé 
+            $('.inviteUser').on('click', function(){
+                let idUserB = $(this).data('iduser');
+                let idSalon = $('#salon').val();
+                console.log(idSalon);
+
+                console.log(idUserB);
+                $.ajax({
+                    type: 'post',
+                    url: '{{path("UserOnChat")}}',
+                    data: 'idSalon=' + idSalon + '&idUserB=' + idUserB,
+                    timeout: 3000,
+                    dataType: 'html',
+                    success: function(result){
+
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+

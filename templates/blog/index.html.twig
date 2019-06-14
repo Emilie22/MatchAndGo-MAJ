@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des blogs{% endblock %}
+
+
+{% block body %}
+<section class="heightPage">
+
+
+			<div class="container-fluid">
+				<h2 class="formTitle text-center">Blog</h2>
+				<div class="row">
+
+					{# affichage des messages flash #}
+					{% for label, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="alert alert-{{ label }}">{{ message }}</div>
+						{% endfor %}
+					{% endfor %}
+					
+
+					{# Affichage de la liste des articles de blog #}
+
+					{% for blog in blogs %}
+
+						<div class="col-md-4 my-4">
+							<div class="imgBlog">
+								<a href="{{ path('showBlogWithSlug', {slug: blog.slug}) }}" class="gallery-box"><img src="{{ asset('uploads/article/image/' ~ blog.pictureblog) }}"  class="img-thumbnail"></a>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<a class="blogTitle "href="{{ path('showBlogWithSlug', {slug: blog.slug}) }}"><h3 class="blogTitle">{{ blog.title }}</h3></a>
+									<div class="row">
+										<div class="col-12 col-md-9 fontOrange">
+											<p>publié le {{ blog.datepost|date('d/m/Y') }} par {{ blog.author }}</p>
+										</div>
+										<div class="col-12 col-md-3">
+											<p class="text-right">
+												{% if is_granted('ROLE_ADMIN') %} 
+													<a href="{{ path('deleteBlog', {slug: blog.slug}) }}"><i class="fas fa-trash"></i></a>
+													<a href="{{ path('updateBlog', {slug: blog.slug}) }}"><i class="fas fa-pencil-alt"></i></a> 
+												{% endif %}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					{% endfor %}
+					
+				</div>
+			</div>
+		</section>
+	{% endblock %}

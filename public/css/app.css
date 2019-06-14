@@ -1,0 +1,884 @@
+/*Couleurs pour site :
+jaune : #fdad17
+gris : #3f4253*/
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: #3f4253;
+}
+
+/* Hauteur des pages du site */
+.heightPage {
+  min-height: 100vh;
+}
+
+
+/* Titres principaux du site */
+.formTitle{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  font-family: 'PT Serif', serif;
+  font-weight: 700;
+  color: #fdad17;
+}
+
+/* Couleur de la police des labels des formulaires */
+.fontOrange{
+  color: #fdad17;
+}
+
+.lienHome:hover {
+  text-decoration: none;
+  color: #fdad17; 
+}
+
+.lienHome{
+  color: #dabc83; 
+}
+
+
+/*NAVBAR*/
+
+#navbar {
+  position: absolute;
+  right: 8%;
+}
+
+.navbar-brand > img{
+    width: 80%;
+    margin-top: -13px;
+}
+
+.dropdown > a > .cache {
+  background-color: #fff;
+  width: 15px;
+  position: absolute;
+  color: #fff;
+}
+
+.dropdown > a > .caret {
+  border-bottom: 4px solid transparent;
+  border-top: 4px solid #fdad17;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-radius: 1px;
+  content: "";
+  display: inline-block;
+  height: 0;
+  margin: 0 0 0 .25rem;
+  transition: 250ms all ease;
+  width: 0;
+  vertical-align: middle;
+}
+
+.dropdown:hover > a > .caret {
+  border-top-color: rgb(140, 193, 193);
+  transform: rotate(270deg); 
+}
+
+.dropdown-item {
+  color: #fdad17;
+}
+
+/* Responsive navbar*/
+
+@media all and (max-width:1000px){
+
+  #navbar {
+    z-index: 10;
+    top: 100%;    
+    right: 0;
+    border: 1px solid lightgrey;
+    width: 200px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+}
+
+
+/*HOME PAGE*/
+
+/*1ère section home page*/
+
+.logoHome{
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.firstHome {
+  position: relative;
+}
+
+.titleHome {
+  position: absolute;
+  top: 40vh;
+  left: 40vw;
+}
+
+.homeP {
+  color: #fdad17;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.firstHome > p {
+  font-size: 1.5rem;
+}
+
+.logo3{
+  width: 11em;
+  height: 11em;
+  margin-bottom: 2em;
+}
+
+/*2ème section homepage*/
+
+.secondHome {
+  margin: 7% auto;
+}
+
+.step1 {
+  color: #DABC83;
+  border: 5px solid #DABC83;
+}
+
+.step2 {
+  color: #fdad17;
+  border: 5px solid #fdad17;
+}
+
+.step3 {
+  color: #E8570C;
+  border: 5px solid #E8570C;
+}
+
+.step4 {
+  color: #B70000;
+  border: 5px solid #B70000;
+}
+
+.step1, .step2, .step3, .step4 {
+  width: 150px;
+  border-radius: 50%;
+  padding: 35px 0;
+  margin: 20px auto;
+  font-size: 3rem;
+}
+
+/*3ème section homepage*/
+
+.thirdHome {
+  margin: 10% auto 5%;
+}
+
+.thirdHome > h2 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+}
+
+.gallery-box {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    max-width: 650px;
+    overflow:hidden;
+    height: 80%;
+    width: 100%;
+}
+
+.gallery-box > img {
+  height: 100%;
+  width: 100%;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.gallery-box:hover img {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.no-gutter > [class*=col-] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+/*responsive home page*/
+
+@media all and (max-width:1000px){
+  .titleHome {
+    position: absolute;
+    top: 9vh;
+    left: 34vw;
+  }
+  .step1, .step2, .step3, .step4 {
+    width: 100px;
+    padding: 12px 0;
+  }
+}
+
+@media all and (max-width:600px){
+  .titleHome {
+    position: absolute;
+    top: 2vh;
+    left: 13vw;
+  }
+}
+
+
+
+
+/*FORMULAIRES*/
+
+.formBackG{
+  background: #3f4253;
+  color: #fdad17;
+}
+
+.formInput{
+  background: #696d8a;
+  color: #fdad17;
+  border: #696d8a;
+}
+
+.formButton{
+  background: #fdad17;
+  color: #3f4253;
+  margin: 1rem;
+ }
+
+ .form-inline .form-control{
+    width: 100%;
+}
+
+.mdpoublie {
+  color: #DABC83; 
+}
+
+.mdpoublie:hover {
+  color: #fdad17; 
+}
+
+
+
+/*Création du profil*/
+
+.btnCreateProfile{
+  background: #fdad17;
+  color: #3f4253;
+}
+
+.profileBg{
+  background-image: url('../uploads/user/image/addprofil.jpg');
+  background-repeat: no-repeat;
+
+}
+
+.addProfileBg{
+  color: black;
+  background-color: rgba(248,248,248,0.7);
+  padding: 30px;
+  height: 58.5em;
+}
+
+.updateProfileBg{
+  color: black;
+  background-color: rgba(248,248,248,0.7);
+  padding: 30px;
+  height: 60.5em;
+}
+
+
+.fas{
+  color: #fdad17;
+  font-size: 1.5em;
+  margin: 5px;  
+}
+
+.navbar-light .navbar-nav .nav-link{
+  color: #fdad17;
+}
+
+/* Responsive tablette de la page de création de profil */
+
+@media all and (max-width:1000px){
+  .profileBg{
+    background-size: cover; 
+    height: 68em;
+  }
+
+  .addProfileBg{
+    height: 64em;
+  }
+  .updateProfileBg{
+    height: 64.5em;
+  }
+
+}
+
+/* Responsive mobile de la page de création de profil */
+
+@media all and (max-width:600px){
+  .profileBg{
+    height: 79em;
+    background-size: cover;
+  }
+
+  .addProfileBg{
+    height: 71em;
+  }
+  
+  .updateProfileBg{
+    height: 70.5em;
+  }
+
+  .profileUpdateBg{
+    background-size: cover;
+  }
+
+}
+
+/* Formulaire de modification du profil */
+
+.profileUpdateBg{
+  background-image: url('../uploads/user/image/updateProfile.jpg');
+  background-repeat: no-repeat;
+}
+
+
+
+/* Affichage du profil de l'utilisateur connecté */
+
+.imgBgProfile{
+  height: 60.5em;
+  width: 100%;
+}
+
+.rowBgProfile{
+  position: relative;
+}
+
+.infosProfile{
+  position: absolute;
+  top: 0;
+  background-color: rgba(248,248,248,0.8);
+  color: #3f4253;
+  left: 12em;
+  width: 55em;
+  height: 60.5em;
+  text-align: center;
+
+}
+
+.iconFbk {
+  color: #3f4253;
+}
+
+.iconFbk:hover, .iconInsta:hover{
+  color: #fdad17; 
+}
+
+.iconComment{
+  color: #3f4253;
+}
+
+.iconComment:hover{
+  color: #fdad17;
+  text-decoration: none;
+}
+
+/* Photo de profil de l'utilisateur */
+
+.avatar{
+  width: 15em;
+  height: 15em;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px black;
+}
+
+/* Lien chat sur le profil d'un utilisateur */
+.infosProfile > a{
+  color: #3f4253;
+}
+
+
+
+/* Responsive de la page Voir profil sur tablette */
+
+@media all and (max-width:1000px){
+
+    .infosProfile{
+      width:100%;
+      left: 0;
+      height: 64em;
+    }
+
+    .infosProfile h3{
+       font-size: 1.5em;
+      }
+
+    .imgBgProfile{
+      height: 64em;
+    }
+
+    .description p{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .rowBgProfile{
+      height: 64em;
+    }
+
+}
+
+/* Responsive de la page Voir profil sur mobile */
+
+
+@media all and (max-width:600px){
+    
+    .infosProfile{
+      width:100%;
+      left: 0;
+      height: 80em;
+    }
+
+    .imgBgProfile{
+      height: 80em;
+    }
+
+    .description p{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    .rowBgProfile{
+      height: 80em;
+    }
+
+
+}
+
+
+
+/*CAROUSEL*/
+
+
+#carouselQuiz {
+  margin-top: 2.5rem;
+  background-color: #fff;
+  height: 600px;
+  position: relative;
+}
+
+.carousel-inner {
+  height: 600px;
+  border: 10px solid #25283a;
+}
+
+.titleQuiz {
+  color: #fdad17;
+}
+
+.ico {
+  background: none;
+  color: #3f4253;
+}
+
+.ico:hover {
+  background: none;
+  color: #3f4253;
+}
+
+.ico:focus {
+  background: none;
+  color: #3f4253;
+}
+
+.slideMap {
+  background-color: #FFF9D6;
+}
+
+.pictureQuiz {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110%;
+  height: 600px;
+  opacity: 0.6;
+}
+
+.labelQuestion {
+  margin-top: 4rem;
+  color: #3f4253;
+  font-family: 'PT Serif', serif;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.littleContainer {
+  width: 60%;
+  margin: 200px auto 0;
+}
+
+.btnAnswers {
+  background-color: #3f4253;
+  border: 1px solid #3f4253;
+  color: #fdad17;
+  width: 250px;
+}
+
+.btnAnswers:hover {
+  background-color: #fdad17;
+  color: #3f4253;  
+}
+
+#btnSearchMatch {
+  background-color: #fdad17;
+  color: #3f4253;
+  width: 55%;
+  height: 100px;
+  border: 1px solid #fdad17;
+  border-radius: 5px;
+  margin: 5rem auto 0;
+  font-size: 1.7rem;
+  padding: 10px;
+}
+
+#btnSearchMatch:hover {
+  background-color: #3f4253;
+  color: #fdad17;  
+  cursor: pointer;
+}
+
+
+/*responsive tablette carousel quiz*/
+@media all and (max-width: 1000px) {
+  .btnAnswers {
+    width: 100%;
+  }
+  #btnSearchMatch {
+    margin: 0 auto;
+    width: 60%;
+    height: 100px;
+    border: 1px solid #fdad17;
+    border-radius: 5px;
+    margin-top: 15rem;
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+/*responsive portable carousel quiz*/
+@media all and (max-width: 600px) {
+  .labelQuestion {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  .littleContainer {
+    width: 80%;
+    margin: 30% auto 0;
+  }
+  .btnAnswers {
+    width: 100%;
+  }
+  #btnSearchMatch {
+    margin: 0 auto;
+    width: 60%;
+    height: 100px;
+    border: 1px solid #fdad17;
+    border-radius: 5px;
+    margin-top: 15rem;
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+
+/*PAGE MATCH */
+
+.avatar2 {
+  border-radius: 50%;
+  width: 125px;
+  height: 100px;
+  margin-top: 30px;
+}
+
+.box15{position:relative; margin-top: 0.5em}
+.box15 img{width:99%;height:19em}
+.box15 .box-content{width:100%;height:100%;position:absolute;top:0;left:0;transition:all .5s ease 0s}
+.box15:hover .box-content{background-color:rgba(255,242,242,.8)}
+.box15 .box-content:after,.box15 .box-content:before{content:"";width:50px;height:50px;position:absolute;opacity:0;transform:scale(1.5);transition:all .6s ease .3s}
+.box15 .box-content:before{border-left:1px solid #040404;border-top:1px solid #040404;top:19px;left:19px}
+.box15 .box-content:after{border-bottom:1px solid #040404;border-right:1px solid #040404;bottom:19px;right:19px}
+.box15:hover .box-content:after,.box15:hover .box-content:before{opacity:1;transform:scale(1)}
+.box15 .title{font-size:22px;color:#000;margin:0;position:relative;top:0;opacity:0;transition:all 1s ease 10ms}
+.box15:hover .title{top:19%;opacity:1;transition:all .5s cubic-bezier(1,-.53,.405,1.425) 10ms; text-align: center; font-size: 1.5em;}
+.box15 .title:after{content:"";width:0;height:1px;background:#040404;position:absolute;bottom:-8px;left:0;right:0;margin:0 auto;transition:all 1s ease 0s}
+.box15:hover .title:after{width:80%;transition:all 1s ease .8s}
+.box15 .icon{width:100%;margin:0 auto;position:absolute;bottom:0;opacity:0;transition-duration:.6s;transition-timing-function:cubic-bezier(1,-.53,.405,1.425);transition-delay:.1s}
+.box15:hover .icon{bottom:20%;opacity:1; text-align: center}
+.box15 .icon li{display:inline-block}
+.box15 .icon li a{display:block;width:40px;height:40px;line-height:40px;border-radius:50%;font-size:18px;color:#3f4253;border:1px solid #3f4253;margin-right:5px;transition:all .3s ease-in-out 0s}
+.box15 .icon li a:hover{background:#3f4253;color:#fff}
+@media all and (max-width:1000px){.box15{margin-bottom:30px}
+}
+
+
+.btnSearch{
+  background: #fdad17;
+  color: #3f4253;
+}
+
+.btnSearch:hover{
+  text-decoration: none;
+  color: white;
+}
+
+
+/* Responsive de la page liste des matchs */
+
+@media all and (max-width: 1000px) {
+  #mapLoc {
+    height: 400px;
+  }
+  .titleMatch {
+    font-size: 1.2rem;
+  }
+}
+@media all and (max-width: 600px) {
+  .avatar2 {
+    display: none;
+  }
+}
+
+
+/*Formulaire admin Concept*/
+
+.btnConcept{
+  background: #fdad17;
+  color: #3f4253;
+}
+
+
+/*Affichage de la page concept*/
+
+.conceptBg{
+  background: #3f4253;
+  color: #fdad17;
+}
+
+.conceptRow{
+  background: #dabc83;
+  color: #3f4253;
+  margin: 5% auto;
+}
+
+.teamPhoto img{
+  width: 10em;
+  height: 10em;
+}
+
+
+
+/*MAP localisation match*/
+
+#mapLoc {
+  height: 615px;
+}
+
+
+.btn-dark {
+    color: #fdad17;
+}
+
+.btn-dark:hover{
+  background-color: #fdad17;
+  border-color: #fdad17;
+  color: #3f4253;
+}
+
+
+
+.inputContact{
+  border-radius: 1.5rem;
+  background: #696d8a;
+  color: #fdad17;
+  border: #696d8a;
+
+}
+.contactBg{
+  background: #3f4253;
+  color: #fdad17;
+}
+
+
+/* Admin  : gestion des users */ 
+
+.main-box.no-header {
+    padding-top: 20px;
+    margin-top: 50px;
+}
+.main-box {
+    background: #FFFFFF;
+    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    margin-bottom: 16px;
+    -webikt-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.label {
+    border-radius: 3px;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+.user-list tbody td .user-subhead {
+    font-size: 0.875em;
+    font-style: italic;
+}
+.user-list tbody td .user-link {
+    display: block;
+    font-size: 1.25em;
+    padding-top: 3px;
+    margin-left: 60px;
+}
+ 
+.user-list tbody td>img {
+    position: relative;
+    max-width: 50px;
+    float: left;
+    margin-right: 15px;
+}
+
+.table thead tr th {
+    text-transform: uppercase;
+    font-size: 0.875em;
+}
+.table thead tr th {
+    border-bottom: 2px solid #e7ebee;
+}
+.table tbody tr td:first-child {
+    font-size: 1.125em;
+    font-weight: 300;
+}
+.table tbody tr td {
+    font-size: 0.875em;
+    vertical-align: middle;
+    border-top: 1px solid #e7ebee;
+    padding: 12px 8px;
+}
+.user-link{
+  color: #3f4253;
+}
+.user-link:hover{
+  color: #fdad17; 
+}
+
+.searchUser, .trashUser {
+  color: #fdad17;
+  font-size: 1.5em;
+  margin: 5px;  
+}
+
+.searchUser:hover, .trashUser:hover {
+  color: #3f4253;
+}
+
+
+/*BLOG*/
+
+.imgBlog {
+  height: 70%;
+  width: 100%;
+}
+
+.imgBlog > img {
+  height: 100%;
+  width: 100%;
+}
+
+.formContent{
+  margin-top: 30px;
+}
+
+.formPublish{
+  margin-top: 25px;
+  text-align: center;
+}
+
+.blogTitle{
+  color: #e0b565;
+}
+
+.blogTitle:hover{
+  text-decoration: none;
+  color: #fdad17;
+}
+
+/*responsive tablette blog*/
+@media all and (max-width: 1000px) {
+  .blogTitle {
+    font-size: 1rem;
+  }
+
+}
+
+
+/*FOOTER*/
+
+footer {
+  color: #dabc83;
+  background-color: #25283a;
+  padding : 20px 0;
+}
+
+/* Page chat :  */
+
+#stop{
+    vertical-align: middle;
+}
+#listMessage{
+    width: 100%;
+    height: 490px;
+    background-color: #696d8a;
+    color: #fdad17;
+    list-style: none;
+}
+mark{
+    background: none;
+    color: rgb(66, 67, 85);
+}
+
+.colorP{
+  color: #fdad17 
+}
+
+
+.cgu h3{
+  color: #dabc83;
+}
+
+#mapquiz {
+ width: 100%;
+ height: 400px;
+ z-index: 10;
+ background: none;
+}
+
+#mapid {
+  width: 100%; 
+  height: 400px;
+}

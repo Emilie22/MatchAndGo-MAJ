@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Match&Go{% endblock %}
+
+{% block body %}
+
+<section class="heightPage">
+
+   <div class="container-fluid pl-0 pr-0">
+   
+    {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} m-0">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+    {# video et titre #}
+    <section class="firstHome">
+
+     <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" style="width: 100%" src="{{asset ('video/match&go2.mp4')}}" type="video/mp4" class="videoHome">
+     </video>
+
+      <div class="titleHome text-center">
+        <img class="logoHome" src="{{ asset ('Matchandgo4.png')}}">
+        <p class="homeP">Trouvez votre partenaire de voyage</p>
+        <a href="{{ path('app_register') }}" class="btn btn-dark">C'est parti !</a>
+      </div>
+      
+    </section>
+
+    {# description étapes du site #}
+    <section class="secondHome">
+
+      <div class="row">
+        <div class="col-12 col-md-3 text-center pl-2 pr-4">
+          <img class="text-center mt-5 logo3" src="{{ asset ('logo3.png')}}"></img>
+          <p class="text-center text-white px-3">Inscris-toi sur Match&Go pour trouver des voyageurs qui te ressemblent !</p>
+        </div>
+        <div class="col-12 col-md-3 text-center pl-2 pr-4">
+          <img class="text-center mt-5 logo3" src="{{ asset ('logo4.png')}}"></img>
+
+          <p class="text-center text-white">Crée ton profil, ajoute ta photo et décris-toi en quelques lignes !</p>
+        </div>
+        <div class="col-12 col-md-3 text-center pl-2 pr-4">
+          <img class="text-center mt-5 logo3" src="{{ asset ('logo5.png')}}"></img>
+          <p class="text-center text-white">Recherche des matchs en répondant à notre questionnaire !</p>
+
+        </div>
+        <div class="col-12 col-md-3 text-center pl-2 pr-4">
+          <img class="text-center mt-5 logo3" src="{{ asset ('logo6.png')}}"></img>
+          <p class="text-center text-white px-3">Trouve des voyageurs qui te correspondent et discute avec eux !</p>
+        </div>              
+      </div>
+
+    </section>
+
+    {# 3 derniers articles du blog #}
+    <section class="thirdHome no-padding">
+
+      <h3 class="text-center mb-4 formTitle">Derniers articles du blog</h3>
+
+      <div class="row no-gutter">
+        {% for blog in blogs %}
+          <div class="col-12 col-lg-4 ">
+            <a href="{{ path ('showBlogWithSlug', {slug:blog.slug}) }}" class="gallery-box">
+              <img src="{{ asset('uploads/article/image/' ~ blog.pictureblog) }}"  class="img-thumbnail">
+            </a>
+            <p class="text-center mt-3 text-white">{{blog.title}}</p>
+          </div>
+        {% endfor %}    
+      </div>   
+
+    </section>
+
+  </div>
+
+</section>
+
+{% endblock %}
+
+
